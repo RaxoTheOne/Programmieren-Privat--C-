@@ -1,6 +1,33 @@
 #include <stdio.h>
 #include <time.h>
 #include <unistd.h>  // Für sleep()
+#include <termios.h>
+#include <fcntl.h>
+
+int kbhit(void) {
+    struct termios oldt, newt;
+    int ch;
+    int oldf;
+
+    tcgetattr(STDIN_FILENO, &oldt);
+    newt = oldt;
+    newt.c_lflag &= ~(ICANON | ECHO); // Keine Kanonische Eingabe und kein Echo
+    tcsetattr(STDIN_FILENO, TCSANOW, &newt);
+    oldf = fcntl(STDIN_FILENO, F_GETFL, 0);
+    fcntl(STDIN_FILENO, F_SETFL, oldf | O_NONBLOCK); // Keine Blockierung
+
+    ch = getchar();
+
+    tcsetattr(STDIN_FILENO, TCSANOW, &oldt); // Zurücksetzen der Terminal-Einstellungen
+    fcntl(STDIN_FILENO, F_SETFL, oldf); // Zurücksetzen der File-Flags
+
+    if(ch != EOF) {
+        ungetc(ch, stdin); // Zeiche zurück in Eingabepuffer
+        return 1;
+    }
+
+    return 0;
+}
 
 int main()
 {
@@ -59,11 +86,11 @@ int main()
                 break;
 
             case 3:
-                if (laeuft || zurückgesetzt) {
+                if (laeuft) {
                     printf("\nStoppuhr wird zurückgesetzt...\n");
                     laeuft = 0;  // Stoppuhr stoppen
                 }
-                startzeit = time(NULL);  // Zurücksetzen der Startzeit
+                startzeit = time(NULL);  // Startzeit neu setzen (Zurücksetzen der Uhr)
                 printf("Stoppuhr zurückgesetzt. Drücke '1' um erneut zu starten.\n");
                 zurückgesetzt = 1;  // Zurücksetzen-Status setzen
                 break;
