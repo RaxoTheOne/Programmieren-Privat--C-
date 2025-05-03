@@ -1,7 +1,7 @@
 #include <stdio.h>
-#include <time.h>
-#include <unistd.h>  // Für sleep()
-#include <termios.h>
+#include <time.h> // Für time_t(time();)
+#include <unistd.h>  // Für sleep();
+#include <termios.h> // Für termios;
 #include <fcntl.h>
 
 int kbhit(void) {
