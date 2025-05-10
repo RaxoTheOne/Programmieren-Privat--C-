@@ -23,7 +23,7 @@ int main(){
     //Ausgabe der Daten
     printf("\n----Personenliste----\n");
     for(int i = 0; i < 3; i++){
-        printf("Name: %s, Alter: %d, Groesse: %.2f\n", personen[i].name, personen[i].alter, personen[i].groesse);
+        printf("Name: %s | Alter: %d | Groesse: %.2f m\n", personen[i].name, personen[i].alter, personen[i].groesse);
     }
 
 }
