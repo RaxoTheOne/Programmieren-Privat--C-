@@ -32,7 +32,7 @@ int main()
     }
 
     durchschnitt = summe / 5.0; // Durchschnitt berechnen
-    printf("Dein Notendurchschnitt ist: %.1f", durchschnitt);
+    printf("Dein Notendurchschnitt ist: %.2f", durchschnitt);
 
     return 0;
 }
