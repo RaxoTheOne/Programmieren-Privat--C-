@@ -8,6 +8,7 @@ int main()
     int noten[5];
     float summe = 0.0;  // Summe der Noten
     float durchschnitt; // Durchschnitt der Noten
+
     // Eingabe des Namens und Alters
     printf("Willkommen zu meiner C - Übung!\n");
 
